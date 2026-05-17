@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-
 import { expect } from 'tstyche'
 import fastify from 'fastify'
 import { GraphQLDirective, GraphQLResolveInfo } from 'graphql'
