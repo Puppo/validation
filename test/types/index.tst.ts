@@ -1,12 +1,14 @@
-import { expectType } from 'tsd'
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
+import { expect } from 'tstyche'
 import fastify from 'fastify'
 import { GraphQLDirective, GraphQLResolveInfo } from 'graphql'
 import { MercuriusContext } from 'mercurius'
 import mercuriusValidation, { MercuriusValidationHandler, MercuriusValidationHandlerMetadata, MercuriusValidationOptions } from '../..'
 
 // Validate GraphQL definitions
-expectType<string>(mercuriusValidation.graphQLTypeDefs)
-expectType<GraphQLDirective>(mercuriusValidation.graphQLDirective)
+expect(mercuriusValidation.graphQLTypeDefs).type.toBe<string>()
+expect(mercuriusValidation.graphQLDirective).type.toBe<GraphQLDirective>()
 
 const app = fastify()
 
@@ -67,12 +69,12 @@ app.register(mercuriusValidation, {
     Query: {
       message: {
         async id (metadata, value, parent, args, context, info) {
-          expectType<MercuriusValidationHandlerMetadata>(metadata)
-          expectType<any>(value)
-          expectType<any>(parent)
-          expectType<any>(args)
-          expectType<MercuriusContext>(context)
-          expectType<GraphQLResolveInfo>(info)
+          expect(metadata).type.toBe<MercuriusValidationHandlerMetadata>()
+          expect(value).type.toBe<any>()
+          expect(parent).type.toBe<any>()
+          expect(args).type.toBe<any>()
+          expect(context).type.toBe<MercuriusContext>()
+          expect(info).type.toBe<GraphQLResolveInfo>()
         }
       }
     }
@@ -101,13 +103,13 @@ const validationOptions: MercuriusValidationOptions = {
           context: CustomContext,
           info
         ) {
-          expectType<MercuriusValidationHandlerMetadata>(metadata)
-          expectType<any>(value)
-          expectType<CustomParent>(parent)
-          expectType<CustomArgs>(args)
-          expectType<CustomContext>(context)
-          expectType<string | undefined>(context?.hello)
-          expectType<GraphQLResolveInfo>(info)
+          expect(metadata).type.toBe<MercuriusValidationHandlerMetadata>()
+          expect(value).type.toBe<any>()
+          expect(parent).type.toBe<CustomParent>()
+          expect(args).type.toBe<CustomArgs>()
+          expect(context).type.toBe<CustomContext>()
+          expect(context?.hello).type.toBe<string | undefined>()
+          expect(info).type.toBe<GraphQLResolveInfo>()
         }
       }
     }
@@ -121,13 +123,13 @@ const authOptionsWithGenerics: MercuriusValidationOptions<CustomParent, CustomAr
     Query: {
       message: {
         async id (metadata, value, parent, args, context, info) {
-          expectType<MercuriusValidationHandlerMetadata>(metadata)
-          expectType<any>(value)
-          expectType<CustomParent>(parent)
-          expectType<CustomArgs>(args)
-          expectType<CustomContext>(context)
-          expectType<string | undefined>(context?.hello)
-          expectType<GraphQLResolveInfo>(info)
+          expect(metadata).type.toBe<MercuriusValidationHandlerMetadata>()
+          expect(value).type.toBe<any>()
+          expect(parent).type.toBe<CustomParent>()
+          expect(args).type.toBe<CustomArgs>()
+          expect(context).type.toBe<CustomContext>()
+          expect(context?.hello).type.toBe<string | undefined>()
+          expect(info).type.toBe<GraphQLResolveInfo>()
         }
       }
     }
@@ -138,13 +140,13 @@ app.register(mercuriusValidation, authOptionsWithGenerics)
 // Creating functions using handler types
 const id: MercuriusValidationHandler<{}, {}, CustomContext> =
   async (metadata, value, parent, args, context, info) => {
-    expectType<MercuriusValidationHandlerMetadata>(metadata)
-    expectType<any>(value)
-    expectType<{}>(parent)
-    expectType<{}>(args)
-    expectType<CustomContext>(context)
-    expectType<GraphQLResolveInfo>(info)
-    expectType<string | undefined>(context?.hello)
+    expect(metadata).type.toBe<MercuriusValidationHandlerMetadata>()
+    expect(value).type.toBe<any>()
+    expect(parent).type.toBe<{}>()
+    expect(args).type.toBe<{}>()
+    expect(context).type.toBe<CustomContext>()
+    expect(info).type.toBe<GraphQLResolveInfo>()
+    expect(context?.hello).type.toBe<string | undefined>()
   }
 app.register(mercuriusValidation, {
   schema: {
